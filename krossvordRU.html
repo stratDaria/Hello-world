@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Новогодний кроссворд</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f7ff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #d40000;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .crossword-container {
+      display: inline-block;
+      margin: 20px auto;
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .crossword-grid {
+      display: grid;
+      grid-template-columns: repeat(15, 30px);
+      grid-gap: 1px;
+      margin: 0 auto;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      border: 1px solid #000;
+      font-weight: bold;
+      font-size: 16px;
+      position: relative;
+    }
+
+    .cell.black {
+      background-color: #000;
+    }
+
+    .cell.number::before {
+      content: attr(data-number);
+      position: absolute;
+      top: 1px;
+      left: 2px;
+      font-size: 10px;
+      color: #000;
+    }
+
+    .word-list {
+      margin-top: 20px;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .word-list h2 {
+      color: #2c3e50;
+    }
+
+    .word-list ol {
+      padding-left: 20px;
+    }
+
+    .word-list li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎄 Новогодний кроссворд 🎄</h1>
+
+  <div class="crossword-container">
+    <div class="crossword-grid" id="grid"></div>
+  </div>
+
+  <div class="word-list">
+    <h2>Слова в кроссворде:</h2>
+    <ol>
+      <li>Ёлка</li>
+      <li>Гирлянда</li>
+      <li>Мандарины</li>
+      <li>Бенгальские огни</li>
+      <li>Дед Мороз</li>
+      <li>Салют</li>
+      <li>Фейерверк</li>
+      <li>Куранты</li>
+      <li>Желание</li>
+      <li>Хлопушки</li>
+    </ol>
+  </div>
+
+  <script>
+    // Слова кроссворда
+    const words = [
+      { word: "ЁЛКА", direction: "across", row: 0, col: 6, number: 1 },
+      { word: "ГИРЛЯНДА", direction: "across", row: 2, col: 2, number: 2 },
+      { word: "МАНДАРИНЫ", direction: "across", row: 4, col: 1, number: 3 },
+      { word: "БЕНГАЛЬСКИЕОГНИ", direction: "across", row: 6, col: 0, number: 4 }, // без пробела
+      { word: "ДЕДМРОЗ", direction: "down", row: 0, col: 2, number: 5 }, // "Дед Мороз" без пробела и Ё → "ДЕДМРОЗ"
+      { word: "САЛЮТ", direction: "down", row: 0, col: 8, number: 6 },
+      { word: "ФЕЙЕРВЕРК", direction: "down", row: 1, col: 11, number: 7 },
+      { word: "КУРАНТЫ", direction: "across", row: 10, col: 4, number: 8 },
+      { word: "ЖЕЛАНИЕ", direction: "across", row: 12, col: 3, number: 9 },
+      { word: "ХЛОПУШКИ", direction: "down", row: 4, col: 13, number: 10 }
+    ];
+
+    const gridSize = 15;
+    const grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
+    const numbers = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
+
+    // Поместить слова в сетку
+    words.forEach(wordObj => {
+      const { word, direction, row, col, number } = wordObj;
+      if (direction === "across") {
+        for (let i = 0; i < word.length; i++) {
+          if (col + i < gridSize) {
+            grid[row][col + i] = word[i];
+            if (i === 0) numbers[row][col + i] = number;
+          }
+        }
+      } else if (direction === "down") {
+        for (let i = 0; i < word.length; i++) {
+          if (row + i < gridSize) {
+            grid[row + i][col] = word[i];
+            if (i === 0) numbers[row + i][col] = number;
+          }
+        }
+      }
+    });
+
+    // Отрисовка сетки
+    const gridElement = document.getElementById("grid");
+    for (let r = 0; r < gridSize; r++) {
+      for (let c = 0; c < gridSize; c++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        if (grid[r][c] === null) {
+          cell.classList.add("black");
+        } else {
+          cell.textContent = grid[r][c];
+          if (numbers[r][c]) {
+            cell.classList.add("number");
+            cell.dataset.number = numbers[r][c];
+          }
+        }
+        gridElement.appendChild(cell);
+      }
+    }
+  </script>
+</body>
+</html>
