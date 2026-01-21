@@ -4,8 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Мой блог</title>
-  <link type="text/css" rel="Pudelinka.tff" href="style.css" />
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* Подключение шрифта */
+    font-face {
+      font-family: 'Pudelinka';
+      src: url('fonts/Pudelinka.woff2') format('woff2'),
+           url('fonts/Pudelinka.woff') format('woff'),
+           url('fonts/Pudelinka.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap; /* улучшает загрузку */
+    }
 
+    /* Применение шрифта ко всему сайту */
+    * {
+      font-family: 'Pudelinka', Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Привет, мир!</h1>
+  <p>Этот текст отображается шрифтом Pudelinka.</p>
+</body>
+</html>
   <style>
     body {
       background-color: #ffff00; /* яркий жёлтый */
