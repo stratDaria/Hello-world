@@ -206,3 +206,75 @@ strawberry: 0.85%
 <img src= "Icons/помидор.jpg" >
 </body>
 </html>
+<h2>21 февраля, 2026</h2
+<p><strong>Лог чат-бота:</strong></p>
+  <p>Вопрос пользователя: Сколько ждать мой заказ?</p>
+  <p>Найден FAQ-вопрос: «Как быстро доставляется заказ?» (sim=0.706)</p>
+  <p>Ответ бот-FAQ: Наш стандартный срок доставки — 3–5 рабочих дней.</p>
+  <p>Дополнительный вопрос: «Как оплатить заказ?» Чат-бот справился с вопросом? <em>Да, бот успешно нашел соответствующий FAQ и дал ответ по срокам доставки. По вопросу оплаты нужно проверить отдельно.</em></p>
+
+  <!-- Скрипт для RSA -->
+  <script>
+    const e = 3;
+    const d = 3;
+    const n = 15;
+
+    function modExp(base, exp, mod) {
+      let result = 1;
+      base = base % mod;
+      while (exp > 0) {
+        if (exp % 2 === 1) {
+          result = (result * base) % mod;
+        }
+        exp = Math.floor(exp / 2);
+        base = (base * base) % mod;
+      }
+      return result;
+    }
+
+    function encrypt() {
+      const input = document.getElementById('input').value.trim();
+      if (input === '') {
+        document.getElementById('output').innerText = 'Ошибка: введите сообщение m.';
+        return;
+      }
+      const m = Number(input);
+      if (!Number.isInteger(m) || m < 0) {
+        document.getElementById('output').innerText = 'Ошибка: m должно быть целым неотрицательным числом.';
+        return;
+      }
+      if (m >= n) {
+        document.getElementById('output').innerText = 'Ошибка: m должно быть меньше n (m < 15).';
+        return;
+      }
+      const C = modExp(m, e, n);
+      document.getElementById('output').innerText = 
+        'Шифрование:\n' +
+        'C = m^e mod n = ' + m + '^' + e + ' mod ' + n + ' = ' + C;
+    }
+
+    function decrypt() {
+      const input = document.getElementById('input').value.trim();
+      if (input === '') {
+        document.getElementById('output').innerText = 'Ошибка: введите шифротекст C.';
+        return;
+      }
+      const C = Number(input);
+      if (!Number.isInteger(C) || C < 0) {
+        document.getElementById('output').innerText = 'Ошибка: C должно быть целым неотрицательным числом.';
+        return;
+      }
+      if (C >= n) {
+        document.getElementById('output').innerText = 'Ошибка: C должно быть меньше n (C < 15).';
+        return;
+      }
+      const m = modExp(C, d, n);
+      document.getElementById('output').innerText = 
+        'Расшифровка:\n' +
+        'm = C^d mod n = ' + C + '^' + d + ' mod ' + n + ' = ' + m;
+    }
+  </script>
+
+</body>
+</html>
+                      
